@@ -26,4 +26,4 @@ jobs:
       - name: Collect and push aircraft
         env:
           POWERBI_PUSH_URL: ${{ secrets.POWERBI_PUSH_URL }}
-        run: python tracker.py
+        run: python -u tracker.py
