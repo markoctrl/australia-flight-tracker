@@ -1,0 +1,29 @@
+name: Australia Flight Tracker
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+
+jobs:
+  update-flights:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Collect and push aircraft
+        env:
+          POWERBI_PUSH_URL: ${{ secrets.POWERBI_PUSH_URL }}
+        run: python tracker.py
